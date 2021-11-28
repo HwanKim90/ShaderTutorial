@@ -10,7 +10,7 @@ Shader "Custom/NewSurfaceShader 5"
         Tags { "RenderType"="Opaque" }
 
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard 
 
         sampler2D _MainTex;
 
@@ -19,19 +19,10 @@ Shader "Custom/NewSurfaceShader 5"
             float2 uv_MainTex;
         };
 
-        
-
-        // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-        // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-        // #pragma instancing_options assumeuniformscaling
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
-
         void surf (Input IN, inout SurfaceOutputStandard o)
         {   
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
-            o.Albedo = c.rgb;
+            o.Albedo = (c.r + c.g + c.b)/3;
             o.Alpha = c.a;
         }
         ENDCG
